@@ -12,7 +12,7 @@ botoesAgendar.forEach((botao) => {
     e.preventDefault();
 
     const mensagem = encodeURIComponent(
-      `Olá! 💜\n\nGostaria de agendar um horário na Cachinhos Studio.\n\nPode me passar os horários disponíveis?`
+      `Olá! 💜 \n\nGostaria de agendar um horário na Cachinhos Studio.\n\nPode me passar os horários disponíveis?`
     );
 
     window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${mensagem}`, "_blank");
