@@ -43,7 +43,9 @@ header {
   object-fit: contain;
   border-radius: 50%;
   margin-bottom: 24px;
-  filter: drop-shadow(0 0 35px rgba(168, 85, 247, 0.55));
+  filter:
+  drop-shadow(0 0 18px rgba(255,255,255,.25))
+  drop-shadow(0 0 45px rgba(168,85,247,.65));
   animation: floatLogo 4s ease-in-out infinite;
 }
 
@@ -312,4 +314,57 @@ footer {
   .servico-card button {
     width: 100%;
   }
+}
+.hero-buttons{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:15px;
+}
+
+.btn-outline{
+    background:transparent;
+    border:2px solid rgba(168,85,247,.5);
+    color:#fff;
+}
+
+.btn-outline:hover{
+    background:rgba(168,85,247,.15);
+}
+
+.scroll-indicator{
+
+    margin-top:60px;
+
+    font-size:34px;
+
+    color:#a855f7;
+
+    animation:seta 2s infinite;
+
+    opacity:.7;
+
+}
+
+@keyframes seta{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(12px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
 }
