@@ -34,7 +34,7 @@ function abrirModal(servico) {
   dados.opcoes.forEach((opcao) => {
     const item = document.createElement("button");
     item.className = "modal-opcao";
-    
+
     item.innerHTML = `
       <strong>${opcao.nome}</strong>
       <small>A partir de R$ ${opcao.preco} • ${opcao.tempo}</small>
@@ -147,4 +147,4 @@ modalContinuar.addEventListener("click", () => {
   console.log("Data:", dataSelecionada);
 
   modalContinuar.textContent = "Horários em breve 💜";
-});
+}); <!-- Teste VS Code -->
