@@ -12,6 +12,7 @@ let servicoSelecionado = "";
 let opcaoSelecionada = "";
 let dataSelecionada = "";
 let horarioSelecionado = "";
+let formularioAberto = false;
 
 botoes.forEach((botao) => {
   botao.addEventListener("click", () => {
@@ -30,8 +31,11 @@ function abrirModal(servico) {
   modalOpcoes.innerHTML = "";
   modalContinuar.textContent = "Continuar";
   modalContinuar.style.display = "block";
+  
   opcaoSelecionada = "";
   dataSelecionada = "";
+  horarioSelecionado = "";
+  formularioAberto = false;
 
   dados.opcoes.forEach((opcao) => {
     const item = document.createElement("button");
@@ -156,6 +160,7 @@ function mostrarHorarios() {
 }
 
 function mostrarFormulario() {
+  formularioAberto = true;
 
   modalIcone.textContent = "💜";
   modalTitulo.textContent = "Quase lá!";
@@ -223,6 +228,34 @@ modalContinuar.addEventListener("click", () => {
       modalContinuar.textContent = "Continuar";
     }, 1600);
     return;
+  }
+
+  if (formularioAberto) {
+  const nome = document.getElementById("clienteNome").value.trim();
+  const whatsapp = document.getElementById("clienteWhatsapp").value.trim();
+  const obs = document.getElementById("clienteObs").value.trim();
+
+  if (!nome || !whatsapp) {
+    modalContinuar.textContent = "Preencha nome e WhatsApp";
+    setTimeout(() => {
+      modalContinuar.textContent = "Confirmar Agendamento";
+    }, 1600);
+    return;
+  }
+
+  const mensagem = encodeURIComponent(
+    `Olá! 💜\n\nQuero confirmar meu agendamento na Cachinhos Studio.\n\n` +
+    `Serviço: ${servicoSelecionado}\n` +
+    `Opção: ${opcaoSelecionada}\n` +
+    `Data: ${dataSelecionada}\n` +
+    `Horário: ${horarioSelecionado}\n\n` +
+    `Nome: ${nome}\n` +
+    `WhatsApp: ${whatsapp}\n` +
+    `Observação: ${obs || "Nenhuma"}`
+  );
+
+  window.open(`https://wa.me/5527997727360?text=${mensagem}`, "_blank");
+  return;
   }
 
   mostrarFormulario();
