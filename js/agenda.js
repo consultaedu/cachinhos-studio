@@ -147,4 +147,4 @@ modalContinuar.addEventListener("click", () => {
   console.log("Data:", dataSelecionada);
 
   modalContinuar.textContent = "Horários em breve 💜";
-}); <!-- Teste VS Code -->
+});
