@@ -23,17 +23,18 @@ const modal = document.getElementById("modalAgendamento");
 const fecharModal = document.getElementById("fecharModal");
 const modalIcone = document.getElementById("modalIcone");
 const modalTitulo = document.getElementById("modalTitulo");
+const modalDescricao = document.getElementById("modalDescricao");
 const modalOpcoes = document.getElementById("modalOpcoes");
 const modalContinuar = document.getElementById("modalContinuar");
 
 let servicoSelecionado = "";
 let opcaoSelecionada = "";
+let dataSelecionada = "";
 
 botoes.forEach((botao) => {
   botao.addEventListener("click", () => {
     const card = botao.closest(".servico-card");
     servicoSelecionado = card.querySelector("h2").innerText;
-
     abrirModal(servicoSelecionado);
   });
 });
@@ -43,8 +44,11 @@ function abrirModal(servico) {
 
   modalIcone.textContent = dados.icone;
   modalTitulo.textContent = servico;
+  modalDescricao.textContent = "Escolha uma opção para continuar seu agendamento.";
   modalOpcoes.innerHTML = "";
+  modalContinuar.textContent = "Continuar";
   opcaoSelecionada = "";
+  dataSelecionada = "";
 
   dados.opcoes.forEach((opcao) => {
     const item = document.createElement("button");
@@ -66,6 +70,69 @@ function abrirModal(servico) {
   modal.classList.add("ativo");
 }
 
+function mostrarCalendario() {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = hoje.getMonth();
+
+  const primeiroDia = new Date(ano, mes, 1);
+  const ultimoDia = new Date(ano, mes + 1, 0);
+
+  const nomesMeses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ];
+
+  modalIcone.textContent = "📅";
+  modalTitulo.textContent = `${nomesMeses[mes]} ${ano}`;
+  modalDescricao.textContent = "Escolha o dia do seu atendimento.";
+  modalOpcoes.innerHTML = "";
+  modalContinuar.textContent = "Continuar";
+
+  const calendario = document.createElement("div");
+  calendario.className = "calendario";
+
+  const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+  diasSemana.forEach((dia) => {
+    const label = document.createElement("div");
+    label.className = "dia-semana";
+    label.textContent = dia;
+    calendario.appendChild(label);
+  });
+
+  for (let i = 0; i < primeiroDia.getDay(); i++) {
+    const vazio = document.createElement("div");
+    calendario.appendChild(vazio);
+  }
+
+  for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
+    const data = new Date(ano, mes, dia);
+    const botaoDia = document.createElement("button");
+    botaoDia.className = "dia-calendario";
+    botaoDia.textContent = dia;
+
+    if (data < new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())) {
+      botaoDia.disabled = true;
+      botaoDia.classList.add("indisponivel");
+    }
+
+    botaoDia.addEventListener("click", () => {
+      document.querySelectorAll(".dia-calendario").forEach((btn) => {
+        btn.classList.remove("ativo");
+      });
+
+      botaoDia.classList.add("ativo");
+
+      dataSelecionada = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
+    });
+
+    calendario.appendChild(botaoDia);
+  }
+
+  modalOpcoes.appendChild(calendario);
+}
+
 fecharModal.addEventListener("click", () => {
   modal.classList.remove("ativo");
 });
@@ -85,8 +152,14 @@ modalContinuar.addEventListener("click", () => {
     return;
   }
 
+  if (!dataSelecionada) {
+    mostrarCalendario();
+    return;
+  }
+
   console.log("Serviço:", servicoSelecionado);
   console.log("Opção:", opcaoSelecionada);
+  console.log("Data:", dataSelecionada);
 
-  modalContinuar.textContent = "Próxima etapa em breve 💜";
+  modalContinuar.textContent = "Horários em breve 💜";
 });
