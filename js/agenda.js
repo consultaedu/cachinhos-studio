@@ -155,6 +155,44 @@ function mostrarHorarios() {
   modalOpcoes.appendChild(listaHorarios);
 }
 
+function mostrarFormulario() {
+
+  modalIcone.textContent = "💜";
+  modalTitulo.textContent = "Quase lá!";
+  modalDescricao.textContent = "Informe seus dados para concluir o agendamento.";
+
+  modalOpcoes.innerHTML = "";
+
+  modalContinuar.textContent = "Confirmar Agendamento";
+
+  const formulario = document.createElement("div");
+  formulario.className = "formulario-agendamento";
+
+  formulario.innerHTML = `
+  
+    <input
+      type="text"
+      id="clienteNome"
+      placeholder="Seu nome"
+    >
+
+    <input
+      type="tel"
+      id="clienteWhatsapp"
+      placeholder="WhatsApp"
+    >
+
+    <textarea
+      id="clienteObs"
+      placeholder="Observações (opcional)"
+    ></textarea>
+
+  `;
+
+  modalOpcoes.appendChild(formulario);
+
+}
+
 fecharModal.addEventListener("click", () => {
   modal.classList.remove("ativo");
 });
@@ -183,14 +221,9 @@ modalContinuar.addEventListener("click", () => {
     modalContinuar.textContent = "Escolha um horário primeiro";
     setTimeout(() => {
       modalContinuar.textContent = "Continuar";
-  }, 1600);
+    }, 1600);
+    return;
+  }
 
-  return;
-}
-
-  console.log("Serviço:", servicoSelecionado);
-  console.log("Opção:", opcaoSelecionada);
-  console.log("Data:", dataSelecionada);
-
-  modalContinuar.textContent = "Horários em breve 💜";
+  mostrarFormulario();
 });

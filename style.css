@@ -540,3 +540,57 @@ footer {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.formulario-agendamento{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+.formulario-agendamento input,
+.formulario-agendamento textarea{
+
+    width:100%;
+    padding:16px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.25s;
+
+}
+
+.formulario-agendamento textarea{
+
+    min-height:120px;
+
+    resize:none;
+
+}
+
+.formulario-agendamento input:focus,
+.formulario-agendamento textarea:focus{
+
+    background:rgba(168,85,247,.16);
+
+    box-shadow:0 0 0 2px rgba(168,85,247,.35);
+
+}
+
+.formulario-agendamento input::placeholder,
+.formulario-agendamento textarea::placeholder{
+
+    color:#c8c8c8;
+
+}
