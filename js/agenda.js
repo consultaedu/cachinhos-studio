@@ -11,6 +11,7 @@ const modalContinuar = document.getElementById("modalContinuar");
 let servicoSelecionado = "";
 let opcaoSelecionada = "";
 let dataSelecionada = "";
+let horarioSelecionado = "";
 
 botoes.forEach((botao) => {
   botao.addEventListener("click", () => {
@@ -28,6 +29,7 @@ function abrirModal(servico) {
   modalDescricao.textContent = "Escolha uma opção para continuar seu agendamento.";
   modalOpcoes.innerHTML = "";
   modalContinuar.textContent = "Continuar";
+  modalContinuar.style.display = "block";
   opcaoSelecionada = "";
   dataSelecionada = "";
 
@@ -126,7 +128,9 @@ function mostrarHorarios() {
   modalTitulo.textContent = "Escolha o horário";
   modalDescricao.textContent = `Data selecionada: ${dataSelecionada}`;
   modalOpcoes.innerHTML = "";
-  modalContinuar.style.display = "none";
+
+  modalContinuar.style.display = "block";
+  modalContinuar.textContent = "Continuar";
 
   const listaHorarios = document.createElement("div");
   listaHorarios.className = "lista-horarios";
@@ -142,11 +146,7 @@ function mostrarHorarios() {
       });
 
       botaoHorario.classList.add("ativo");
-
-      console.log("Serviço:", servicoSelecionado);
-      console.log("Opção:", opcaoSelecionada);
-      console.log("Data:", dataSelecionada);
-      console.log("Horário:", horario);
+      horarioSelecionado = horario;
     });
 
     listaHorarios.appendChild(botaoHorario);
@@ -178,6 +178,15 @@ modalContinuar.addEventListener("click", () => {
     mostrarCalendario();
     return;
   }
+
+  if (dataSelecionada && !horarioSelecionado) {
+    modalContinuar.textContent = "Escolha um horário primeiro";
+    setTimeout(() => {
+      modalContinuar.textContent = "Continuar";
+  }, 1600);
+
+  return;
+}
 
   console.log("Serviço:", servicoSelecionado);
   console.log("Opção:", opcaoSelecionada);
