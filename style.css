@@ -368,3 +368,111 @@ footer {
     }
 
 }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(12px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  z-index: 999;
+}
+
+.modal-overlay.ativo {
+  display: flex;
+}
+
+.modal-box {
+  width: min(520px, 100%);
+  background: rgba(25, 22, 32, 0.96);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 34px;
+  padding: 34px 26px;
+  text-align: center;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+  position: relative;
+  animation: modalEnter 0.25s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.modal-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  background: rgba(168, 85, 247, 0.17);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  font-size: 2rem;
+}
+
+.modal-box h2 {
+  margin-bottom: 10px;
+}
+
+.modal-box p {
+  color: #cfcfcf;
+  margin-bottom: 22px;
+}
+
+.modal-opcoes {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.modal-opcao {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  border-radius: 18px;
+  padding: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.22s ease;
+}
+
+.modal-opcao:hover,
+.modal-opcao.ativo {
+  background: rgba(168, 85, 247, 0.25);
+  border-color: rgba(168, 85, 247, 0.65);
+}
+
+.modal-continuar {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #6e44ff, #a855f7);
+  color: #fff;
+  padding: 15px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
