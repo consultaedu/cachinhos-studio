@@ -512,3 +512,31 @@ footer {
   opacity: 0.25;
   cursor: not-allowed;
 }
+
+.lista-horarios {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.horario-chip {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  border-radius: 999px;
+  padding: 13px 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.horario-chip:hover,
+.horario-chip.ativo {
+  background: rgba(168, 85, 247, 0.32);
+  border-color: rgba(168, 85, 247, 0.75);
+}
+
+@media (max-width: 520px) {
+  .lista-horarios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

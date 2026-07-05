@@ -110,12 +110,49 @@ function mostrarCalendario() {
       botaoDia.classList.add("ativo");
 
       dataSelecionada = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
+      setTimeout(() => {
+        mostrarHorarios();
+      }, 300);
     });
 
     calendario.appendChild(botaoDia);
   }
 
   modalOpcoes.appendChild(calendario);
+}
+
+function mostrarHorarios() {
+  modalIcone.textContent = "🕒";
+  modalTitulo.textContent = "Escolha o horário";
+  modalDescricao.textContent = `Data selecionada: ${dataSelecionada}`;
+  modalOpcoes.innerHTML = "";
+  modalContinuar.style.display = "none";
+
+  const listaHorarios = document.createElement("div");
+  listaHorarios.className = "lista-horarios";
+
+  HORARIOS_PADRAO.forEach((horario) => {
+    const botaoHorario = document.createElement("button");
+    botaoHorario.className = "horario-chip";
+    botaoHorario.textContent = horario;
+
+    botaoHorario.addEventListener("click", () => {
+      document.querySelectorAll(".horario-chip").forEach((btn) => {
+        btn.classList.remove("ativo");
+      });
+
+      botaoHorario.classList.add("ativo");
+
+      console.log("Serviço:", servicoSelecionado);
+      console.log("Opção:", opcaoSelecionada);
+      console.log("Data:", dataSelecionada);
+      console.log("Horário:", horario);
+    });
+
+    listaHorarios.appendChild(botaoHorario);
+  });
+
+  modalOpcoes.appendChild(listaHorarios);
 }
 
 fecharModal.addEventListener("click", () => {
