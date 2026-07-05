@@ -1,22 +1,3 @@
-const catalogo = {
-  "Tranças": {
-    icone: "👑",
-    opcoes: ["Box Braids", "Nagô", "Twist", "Fulani"]
-  },
-  "Brow Lamination": {
-    icone: "✨",
-    opcoes: ["Brow Lamination"]
-  },
-  "Lash Lifting": {
-    icone: "🌸",
-    opcoes: ["Lash Lifting"]
-  },
-  "Design de Sobrancelhas": {
-    icone: "💜",
-    opcoes: ["Design simples", "Design com henna"]
-  }
-};
-
 const botoes = document.querySelectorAll(".servico-card button");
 
 const modal = document.getElementById("modalAgendamento");
@@ -40,7 +21,7 @@ botoes.forEach((botao) => {
 });
 
 function abrirModal(servico) {
-  const dados = catalogo[servico];
+  const dados = SERVICOS[servico];
 
   modalIcone.textContent = dados.icone;
   modalTitulo.textContent = servico;
@@ -53,7 +34,11 @@ function abrirModal(servico) {
   dados.opcoes.forEach((opcao) => {
     const item = document.createElement("button");
     item.className = "modal-opcao";
-    item.textContent = opcao;
+    
+    item.innerHTML = `
+      <strong>${opcao.nome}</strong>
+      <small>A partir de R$ ${opcao.preco} • ${opcao.tempo}</small>
+    `;
 
     item.addEventListener("click", () => {
       document.querySelectorAll(".modal-opcao").forEach((btn) => {
@@ -61,7 +46,7 @@ function abrirModal(servico) {
       });
 
       item.classList.add("ativo");
-      opcaoSelecionada = opcao;
+      opcaoSelecionada = opcao.nome;
     });
 
     modalOpcoes.appendChild(item);
