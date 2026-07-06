@@ -54,7 +54,7 @@ function abrirModal(servico) {
       });
 
       item.classList.add("ativo");
-      opcaoSelecionada = opcao.nome;
+      opcaoSelecionada = opcao;
     });
 
     modalOpcoes.appendChild(item);
@@ -261,7 +261,8 @@ modalContinuar.addEventListener("click", () => {
   whatsapp,
   observacao: obs,
   servico: servicoSelecionado,
-  opcao: opcaoSelecionada,
+  opcao: opcaoSelecionada.nome,
+  duracao: opcaoSelecionada.duracaoMin,
   data: dataSelecionada,
   hora: horarioSelecionado
   });
