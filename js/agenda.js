@@ -1,3 +1,5 @@
+const API_URL = "https://script.google.com/macros/s/AKfycbytJW6YT7oikUwlZGiM6C_o3aQDQ7ZtWmDu15sMne-SeDfFcXFwA6cSaKIofQ_NUUuO3A/exec";
+
 const botoes = document.querySelectorAll(".servico-card button");
 
 const modal = document.getElementById("modalAgendamento");
@@ -254,9 +256,52 @@ modalContinuar.addEventListener("click", () => {
     `Observação: ${obs || "Nenhuma"}`
   );
 
-  window.open(`https://wa.me/5527997727360?text=${mensagem}`, "_blank");
+  enviarAgendamento({
+  nome,
+  whatsapp,
+  observacao: obs,
+  servico: servicoSelecionado,
+  opcao: opcaoSelecionada,
+  data: dataSelecionada,
+  hora: horarioSelecionado
+  });
+
   return;
   }
 
   mostrarFormulario();
 });
+
+async function enviarAgendamento(dados) {
+  modalContinuar.textContent = "Enviando...";
+  modalContinuar.disabled = true;
+
+  try {
+    const resposta = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(dados)
+    });
+
+    const resultado = await resposta.json();
+
+    if (!resultado.sucesso) {
+      throw new Error(resultado.erro || "Erro ao agendar");
+    }
+
+    modalIcone.textContent = "✅";
+    modalTitulo.textContent = "Agendamento enviado!";
+    modalDescricao.textContent = "Seu horário foi registrado com sucesso.";
+    modalOpcoes.innerHTML = "";
+    modalContinuar.textContent = "Fechar";
+    modalContinuar.disabled = false;
+
+    modalContinuar.onclick = () => {
+      modal.classList.remove("ativo");
+    };
+
+  } catch (erro) {
+    modalContinuar.textContent = "Tentar novamente";
+    modalContinuar.disabled = false;
+    alert("Erro ao enviar agendamento: " + erro.message);
+  }
+}
