@@ -594,3 +594,9 @@ footer {
     color:#c8c8c8;
 
 }
+
+.horario-chip.ocupado {
+  opacity: 0.28;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}

@@ -129,7 +129,7 @@ function mostrarCalendario() {
   modalOpcoes.appendChild(calendario);
 }
 
-function mostrarHorarios() {
+async function mostrarHorarios() {
   modalIcone.textContent = "🕒";
   modalTitulo.textContent = "Escolha o horário";
   modalDescricao.textContent = `Data selecionada: ${dataSelecionada}`;
@@ -138,6 +138,11 @@ function mostrarHorarios() {
   modalContinuar.style.display = "block";
   modalContinuar.textContent = "Continuar";
 
+  const resposta = await fetch(`${API_URL}?data=${encodeURIComponent(dataSelecionada)}`);
+  const resultado = await resposta.json();
+
+  const ocupados = resultado.ocupados || [];
+
   const listaHorarios = document.createElement("div");
   listaHorarios.className = "lista-horarios";
 
@@ -145,6 +150,17 @@ function mostrarHorarios() {
     const botaoHorario = document.createElement("button");
     botaoHorario.className = "horario-chip";
     botaoHorario.textContent = horario;
+
+    const indisponivel = horarioEstaIndisponivel(
+      horario,
+      opcaoSelecionada.duracaoMin,
+      ocupados
+    );
+
+    if (indisponivel) {
+      botaoHorario.disabled = true;
+      botaoHorario.classList.add("ocupado");
+    }
 
     botaoHorario.addEventListener("click", () => {
       document.querySelectorAll(".horario-chip").forEach((btn) => {
@@ -305,4 +321,21 @@ async function enviarAgendamento(dados) {
     modalContinuar.disabled = false;
     alert("Erro ao enviar agendamento: " + erro.message);
   }
+}
+
+function horarioParaMinutos(horario) {
+  const [hora, minuto] = horario.split(":").map(Number);
+  return hora * 60 + minuto;
+}
+
+function horarioEstaIndisponivel(horario, duracaoNova, ocupados) {
+  const inicioNovo = horarioParaMinutos(horario);
+  const fimNovo = inicioNovo + duracaoNova;
+
+  return ocupados.some((ocupado) => {
+    const inicioOcupado = horarioParaMinutos(ocupado.hora);
+    const fimOcupado = inicioOcupado + Number(ocupado.duracao || 60);
+
+    return inicioNovo < fimOcupado && fimNovo > inicioOcupado;
+  });
 }
