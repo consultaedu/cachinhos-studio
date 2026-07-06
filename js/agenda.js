@@ -138,13 +138,23 @@ async function mostrarHorarios() {
   modalContinuar.style.display = "block";
   modalContinuar.textContent = "Continuar";
 
+  let ocupados = [];
+
+try {
   const resposta = await fetch(`${API_URL}?data=${encodeURIComponent(dataSelecionada)}`);
   const resultado = await resposta.json();
-
-  const ocupados = resultado.ocupados || [];
+  ocupados = resultado.ocupados || [];
+} catch (erro) {
+  console.error("Erro ao buscar horários ocupados:", erro);
+  ocupados = [];
+}
 
   const listaHorarios = document.createElement("div");
   listaHorarios.className = "lista-horarios";
+
+  console.log("Horários padrão:", HORARIOS_PADRAO);
+  console.log("Ocupados:", ocupados);
+  console.log("Opção selecionada:", opcaoSelecionada);
 
   HORARIOS_PADRAO.forEach((horario) => {
     const botaoHorario = document.createElement("button");
